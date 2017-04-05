@@ -57,9 +57,9 @@ node ('slave1'){
      stage ('integration-test'){
 	def STAGING_FRONT_IP = sh returnStdout: true, script: "kubectl get svc ${svcName} --no-headers=true  -n staging |  awk '{print \$3}'"
 	echo "Staging frontend is at ${STAGING_FRONT_IP}"
-	def STAGING_FRONT_URL = "http://" + STAGING_FRONT_IP.trim() + ":3000"
+	def STAGING_FRONT_URL = "http://" + STAGING_FRONT_IP.trim() + ":8080"
 	dir('it'){
-	  git 'https://github.com/antweiss/cicd-workshop.git'
+	  git 'https://github.com/liutas/cicd-workshop.git'
 	  withEnv(["STAGING_FRONT_URL=${STAGING_FRONT_URL}"]){
 	    sh 'ls'
 	    sh './integration-tests/run.sh'

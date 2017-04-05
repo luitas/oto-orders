@@ -55,7 +55,7 @@ node ('slave1'){
         sh "kubectl apply -f ${svcName}-dep.yml -n staging"  
     }
      stage ('integration-test'){
-	def STAGING_FRONT_IP = sh returnStdout: true, script: "kubectl get svc front --no-headers=true  -n staging |  awk '{print \$3}'"
+	def STAGING_FRONT_IP = sh returnStdout: true, script: "kubectl get svc ${svcName} --no-headers=true  -n staging |  awk '{print \$3}'"
 	echo "Staging frontend is at ${STAGING_FRONT_IP}"
 	def STAGING_FRONT_URL = "http://" + STAGING_FRONT_IP.trim() + ":3000"
 	dir('it'){
